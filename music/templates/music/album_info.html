@@ -1,0 +1,31 @@
+<div class="thumbnail">
+    
+    <a href="{% url 'music:detail_album' album.slug %}">
+        <img src="{{ album.cover }}" class="img-responsive" alt="{{ album.title }} album cover">
+    </a>
+    
+    <div class="caption" align="center">
+
+        <a href="{% url 'music:detail_album' album.slug %}"><h2>{{ album.title }}</h2></a>
+        <h3>{{ album.artist }} - {{ album.genre }}</h3>
+
+        <!-- Edit Album -->
+        <a href="{% url 'music:update_album' album.slug %}">
+            <button type="button" class="btn btn-success">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+        </a>
+    
+
+        <!-- Delete Album -->
+        <form class="inline-form" action="{% url 'music:delete_album' album.slug %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="slug" value="{{ album.slug }}" />
+            <button type="submit" class="btn btn-danger">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
+        </form>
+        
+    </div>
+
+</div>

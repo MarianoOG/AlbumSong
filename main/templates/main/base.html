@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <!-- General Config -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Title and Content -->
+    <title>{% block title %}Album - Song{% endblock %}</title>
+    <meta name="description" content="{% block description %}In this site you can add your personal album and create your own list of songs.{% endblock %}">
+    
+    <!-- Load Bootstrap and Google Fonts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    
+    <!-- Load Files -->
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}">
+    
+</head>
+<body class="{% block home %}{% endblock %}">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+
+            <!-- Header -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'main:home' %}">AlbumSong</a>
+            </div>
+
+            <!-- Items -->
+            <div class="collapse navbar-collapse" id="topNavBar">
+                
+                <ul class="nav navbar-nav">
+                    <li class="{% block albums_active %}{% endblock %}">
+                        <a href="{% url 'music:list_album' %}">
+                            <span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp;Albums
+                        </a>
+                    </li>
+                    <li class="{% block songs_active %}{% endblock %}">
+                        <a href="{% url 'music:list_song' %}">
+                            <span class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp;Songs
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{% url 'music:create_album' %}">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add New Album
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+
+    {% block body %}
+    {% endblock %}
+
+
+    <!-- Footer -->
+    <div class="container-fluid nav-fixed-bottom footer">
+        <div class="container">
+            <p>Created by <a href="http://ona309.herokuapp.com">Ona309</a></p>
+        </div>
+    </div>
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>

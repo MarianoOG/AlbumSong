@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+{% block albums_active %}active{% endblock %}
+{% block description %}A list of your albums that you can view, edit, delete or add songs to each one.{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+        
+    {% if all_albums %}
+        
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    
+                    <div class="panel-heading">
+                        <h1>List of all Albums</h1>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for album in all_albums %}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    {% include 'music/album_info.html' %}
+                </div>
+            {% endfor %}
+            {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+        </div>
+
+    {% else %}
+        
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    
+                    <div class="panel-heading">
+                        <h1>No albums to be displayed</h1>
+                    </div>
+
+                    <div class="panel-body">
+                        <h2>Please add a new one!</h2>
+                        <br>
+                        <div>
+                            <a href="{% url 'music:create_album' %}">
+                                <button type="button" class="btn btn-success btn-lg">
+                                    <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an Album
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+</div>
+{% endblock %}

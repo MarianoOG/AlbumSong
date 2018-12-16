@@ -1,0 +1,81 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ album.title }}{% endblock %}
+{% block albums_active %}active{% endblock %}
+{% block description %}Here you can see all the songs that are part of your album, add new songs or delete them.{% endblock %}
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <div class="row">
+
+        <!-- Left Album Info -->
+        <div class="col-sm-4">
+            {% include 'music/album_info.html' %}
+        </div>
+
+        <!-- Right Song Info -->
+        <div class="col-sm-8">
+
+            <div class="panel panel-default">
+                <ul class="nav nav-pills nav-justified">
+                    <li>
+                        <a href="{% url 'music:list_song' %}">
+                            <span class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp;View All Songs
+                        </a>
+                    </li>
+                    <li></li>
+                    <li>
+                        <a href="{% url 'music:create_song' album.slug %}">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add New Song
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <h1>Songs in {{ album.title }} album</h1>
+                </div>
+
+                <div class="panel-body">
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Song Title</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for song in album.song_set.all %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'music:detail_song' song.slug %}">{{ song.title }}</a>
+                                </td>
+                                <td>
+                                    <form class="inline-form" action="{% url 'music:favorite_song' song.slug %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="page" value="detail_album"/>
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span>
+                                        </button>
+                                    </form>
+                                    {% include 'music/album_buttons.html' %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

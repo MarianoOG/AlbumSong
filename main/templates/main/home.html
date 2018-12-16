@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% block home %}cover{% endblock %}
+
+{% block body %}
+<div class="container-fluid home">
+
+    <div class="row">
+        <div class="col-lg-5">
+            <h1>Album Songs</h1>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-offset-1 col-lg-3">
+            <h2>The best way to keep your favorite albums in one place.</h2>
+        </div>
+    
+        <div class="col-lg-offset-3 col-lg-3">
+            <a href="{% url 'music:create_album' %}" class="btn btn-success btn-lg">
+                Create Album
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <a href="{% url 'music:list_album' %}" class="btn btn-warning btn-lg">
+                View Albums
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <a href="{% url 'music:list_song' %}" class="btn btn-warning btn-lg">
+                View Songs
+            </a>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

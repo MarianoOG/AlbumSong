@@ -1,0 +1,110 @@
+{% extends 'main/base.html' %}
+{% block title %}All Songs{% endblock %}
+{% block songs_active %}active{% endblock %}
+{% block description %}A table of your best songs with the quick acces of your favorites videos right away.{% endblock %}
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+        {% if all_songs %}
+
+            <div class="row">
+                {% for song in all_songs %}
+                    {% if song.is_favorite %}
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                            <div class="thumbnail">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ song.youtube_video_ID }}?rel=0"allowfullscreen></iframe>
+                                </div>
+                                <div class="caption" align="center">
+                                    <h2><a href="{% url 'music:detail_song' song.slug %}">{{ song.title }}</a></h2>
+                                    <h4>{{ song.album.artist }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        
+                        <div class="panel-heading">
+                            <h1>All songs</h1>
+                        </div>
+
+                        <div class="panel-body">
+                            
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Song Title</th>
+                                        <th>Album</th>
+                                        <th>Favorite</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for song in all_songs %}
+                                        <tr>
+                                            <td>
+                                                <a href="{% url 'music:detail_song' song.slug %}">{{ song }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'music:detail_album' song.album.slug %}">
+                                                    <img class="album-cover" src="{{ song.album.cover }}" class="img-responsive" alt="{{ song.album.title }} album cover"/>
+                                                    {{ song.album.title }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                
+                                                <form class="inline-form" action="{% url 'music:favorite_song' song.slug %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="page" value="list_song"/>
+                                                    <button type="submit" class="btn btn-default btn-sm">
+                                                        <span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span>
+                                                    </button>
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+            
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        
+                        <div class="panel-heading"><h1>No songs to be displayed</h1></div>
+                        <div class="panel-body">
+                            <h2>Go to any album page to add new song!</h2>
+                            <br>
+                            <div>
+                                <a href="{% url 'music:list_album' %}">
+                                    <button type="button" class="btn btn-warning btn-lg">
+                                        <span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp; Go To Albums
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}
